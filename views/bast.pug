@@ -1,0 +1,173 @@
+doctype html
+html(lang='en')
+  head
+  meta(charset='utf-8')
+  title DOCUMENT PRINT - NCR BASTK
+  script.
+    //var gambar = !{obj.ReportPhotos}; 
+    var object = !{JSON.stringify(obj)};
+    var gambar = object.ReportPhotos.length + 1;//with after
+    var counter = 0;
+    function printDoc(i){
+      counter = counter + i;
+      if(gambar==counter){
+        //window.print();
+      }
+    }
+  style.
+    @page {
+        size: A4;
+    }
+    body {
+    font-family: Calibri !important;
+    }
+    .clear-both {
+    clear: both;
+    }
+    .header, .footer {
+    width: 100%;
+    }
+    .header>div, .footer>div {
+    float: left;
+    width: 33.33%;
+    }
+    #container {
+    width: 100%;
+    margin: 10px auto;
+    }
+    .sub-header{
+    font-weight:bold;
+    font-size:16px;
+    }
+    .title {
+    text-align: center;
+    }
+    .titleID {
+    margin-top: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+    }
+    .titleEN {
+    font-style: italic;
+    }
+    .docnumber {
+    text-align: right;
+    font-style: italic;
+    }
+    .project-desc{
+      float:left;
+      width:58%;
+      font-size:34px;
+      font-weight:bold;
+      margin:0 1% 0 1%;
+    }
+    .location-desc{
+      font-size:24px;
+      font-weight:bold;
+      color:#666;
+    }
+    .detail-desc{
+      float:left;
+      width:38%;
+      margin:20px 1% 20px 1%;
+    }
+    table {
+      border-collapse: collapse; border: 1px solid #ccc;
+    }
+    th {
+    border: 1px solid blue;
+    }
+    td {
+    border: 1px solid black;
+    padding:5px;
+    }
+    td:first-child {
+    width:120px;
+    font-weight:bold;
+    }
+    .ttd{
+      text-align:center;
+      height:100px;
+      border-bottom: 1px solid #000;
+      width: calc(33.33% - 120px) !important;
+      margin:60px;
+    }
+    .terms{
+      font-size:14px;
+    }
+    .beforeImg{
+      max-height:200px;
+      max-width:31%;object-fit: cover;
+      padding:1%;
+    }
+    .afterImg{
+      max-width:100%;object-fit: cover;
+      padding:1%;
+    }
+  body
+    #container
+      .header
+        .logo
+          img#logo(src='https://i.ibb.co/hmjM9k9/logo-white.png', alt='', title='acset', width='150')
+        .title
+          .titleID SERAH TERIMA PERBAIKAN
+          .titleEN MEMO OF FIXING TRANSFER
+        .docnumber Document No #{obj.ReportNo}
+      .clear-both
+      br
+      .sub-header Information
+      hr
+      .project-desc
+        div #{obj.Project.ProjectName}
+        .location-desc
+          div #{obj.Location.LocationName}
+          div(style="font-size:18px;") #{obj.LocationDetail}
+          div(style="font-size:14px;margin-top:10px;text-align:center;") "#{obj.Description}"
+          br
+          div Before
+          hr
+          each item,index in obj.ReportPhotos
+            img.beforeImg(src=''+urlAttach+item.Filename+'', alt='', title=''+item.Filename+'',onload="printDoc(1);")
+          div After
+          hr
+          img.afterImg(src=''+urlAttach+obj.ReportProgresses[0].Photo+'', alt='', title=''+obj.ReportProgresses[0].Photo+'',onload="printDoc(1);")
+      div.detail-desc
+        table
+          tbody
+            tr
+              td Report No
+              td #{obj.ReportNo}
+            tr
+              td Report Date
+              td #{obj.CreateDateFormatted}
+            tr
+              td Finish Date
+              td #{obj.FinishDateFormatted}
+            tr
+              td Person In Charge
+              td #{obj.Project.Pics[0].PicName}
+            tr
+              td Root Cause
+              td #{obj.RootCause}
+            tr
+              td Scope
+              td #{obj.Scope}
+            tr
+              td Matters
+              td #{obj.Matters}
+            tr
+              td Category
+              td #{obj.uv_sla.EnumDesc}
+        br
+        .description
+          .sub-header Terms & Condition
+          ol.terms
+            li Quality Control wajib memeriksa kembali Perbaikan yang diterima sebelum tanda tangan serah terima.
+            li Quality Control DILARANG memanipulasi, memalsukan, atau menutupi Perbaikan.
+            li Dokumen yang sudah ditanda tangan menandakan perbaikan sudah selesai sepenuhnya.
+      .clear-both
+      .footer
+        .ttd QC Head Office <br/> <span style="font-size:10px;margin-right:65px;">Date : </span>
+        .ttd Person In Charge <br/> <span style="font-size:10px;margin-right:65px;">Date : </span>
+        .ttd Reporter <br/> <span style="font-size:10px;margin-right:35px;">Date : </span> 
+      

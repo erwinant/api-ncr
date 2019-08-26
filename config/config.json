@@ -1,0 +1,35 @@
+{
+  "development": {
+    "username": "ncruser",
+    "password": "Acset123",
+    "database": "ncr_app",
+    "host": "bigbang.acset.co",
+    "dialect": "mssql",
+    "folderImage":"C:\\Users\\erwina\\Documents\\RnD\\Project\\api-ncr\\dist\\attachment\\",
+    "baseUrl":"dev-ncr.asgard.co",
+    "global_attachment":"http://localhost:3003/attachment/",
+    "icons":"https://stg-ncr.acset.co/assets/icons/"
+  },
+  "test": {
+    "username": "ncruser",
+    "password": "Acset123",
+    "database": "ncr_app",
+    "host": "asgard",
+    "dialect": "mssql",
+    "folderImage":"C:\\Users\\erwina\\Documents\\RnD\\Project\\api-ncr\\dist\\attachment\\",
+    "baseUrl":"dev-ncr.asgard.co",
+    "global_attachment":"http://localhost:3003/attachment/",
+    "icons":"https://stg-ncr.acset.co/assets/icons/"
+  },
+  "production": {
+    "username": "ncruser",
+    "password": "Acset123",
+    "database": "ncr_app",
+    "host": "asgard",
+    "dialect": "mssql",
+    "folderImage":"C:\\Users\\erwina\\Documents\\RnD\\Project\\api-ncr\\dist\\attachment\\",
+    "baseUrl":"dev-ncr.asgard.co",
+    "global_attachment":"http://localhost:3003/attachment/",
+    "icons":"https://stg-ncr.acset.co/assets/icons/"
+  }
+}

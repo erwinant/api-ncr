@@ -1,0 +1,274 @@
+doctype html
+html(lang='en')
+  head
+  meta(charset='utf-8')
+  title DOCUMENT PRINT - NCR BASTK
+  script.
+    //var gambar = !{obj.ReportPhotos}; 
+    var object = !{JSON.stringify(obj)};
+    var gambar = object.ReportPhotos.length + 1;//with after
+    var counter = 0;
+    function printDoc(i){
+      counter = counter + i;
+      if(gambar==counter){
+        window.print();
+      }
+    }
+  style.
+    @page {
+        size: A4;
+    }
+    @media print {
+      pre, blockquote {page-break-inside: avoid;}
+    }
+    body {
+    font-family: Calibri !important;
+    }
+    .clear-both {
+    clear: both;
+    }
+    .header, .footer {
+    width: 100%;
+    }
+    .header>div{
+    float:left;
+    }
+    .footer>div {
+    float: left;
+    width: 33.33%;
+    }
+    #container {
+    width: 100%;
+    margin: 10px auto;
+    }
+    .sub-header{
+    font-weight:bold;
+    font-size:16px;
+    }
+    .title {
+    text-align: center;
+    }
+    .titleID {
+    margin-top: 10px;
+    font-size:30px;
+    font-weight: bold;
+    }
+    .projectname {
+    text-align: right;
+    font-weight: bold;
+    font-size: 26px;
+    }
+    .detail-desc{
+      float:left;
+      width:100%;
+      margin:0px 1% 0px 1%;
+    }
+    table {
+      border-collapse: collapse; border: 1px solid #ccc;
+    }
+    th {
+    border: 1px solid blue;
+    }
+    td {
+    border: 1px solid black;
+    padding:5px;
+    }
+    td:first-child {
+    width:120px;
+    font-weight:bold;
+    }
+    .ttd{
+      text-align:center;
+      height:100px;
+      border-bottom: 1px solid #000;
+      width: calc(33.33% - 120px) !important;
+      margin:60px;
+    }
+    .terms{
+      font-size:14px;
+    }
+    .beforeImg{
+      max-height:200px;
+      max-width:31%;object-fit: cover;
+      padding:1%;
+    }
+    .afterImg{
+      max-width:100%;object-fit: cover;
+      padding:1%;
+    }
+    .rotate{
+      transform: rotate(-90deg);
+      width:0px !important;
+    }
+    .pageBreak{
+      page-break-before: always;
+    }
+    .beforeImg{
+      max-height:200px;
+      max-width:31%;object-fit: cover;
+      padding:1%;
+    }
+    .afterImg{
+      max-width:100%;object-fit: cover;
+      padding:1%;
+    }
+  body
+    #container
+      .header
+        .logo(style='width:20%')
+          img#logo(src='https://i.ibb.co/hmjM9k9/logo-white.png', alt='', title='acset', width='150')
+        .title(style='width:60%')
+          .titleID NON CONFORMANCE REPORT
+        .projectname(style='width:20%') #{obj.Project.ProjectName} 
+      .clear-both
+      .docnumber(style='width:100%;text-align:center;text-decoration:underline;') No. : #{obj.ReportNo}
+      br
+      div.detail-desc
+        table.pageBreak
+          tbody
+            tr
+              td.rotate(rowspan="9", style="width:10px !important;padding:0px;line-height: 0px;") IDENTIFIKASI
+              td(colspan="5",style="font-weight:bold") REQUESTING PARTY
+            tr
+              td(style="width:15%") Perusahaan:
+              td(style="width:45%") PT. ACSET INDONUSA
+              td(colspan="3",style="width:40%") Deparment: #{obj.Project.ProjectType}
+            tr
+              td Nama:
+                div(style="font-size:10px;font-style:italic;") *nama QC in charge
+              td(style="max-width:250px")  #{obj.Project.Pics[0].PicName}
+              td(colspan="3") Tanggal: #{obj.CreateDateFormatted}
+            tr
+              td(colspan="5") NON - CONFORMANCE
+            tr
+              td Lokasi:
+              td(colspan="4") #{obj.Location.LocationName} - #{obj.LocationDetail}
+            tr
+              td Referensi:
+              td(colspan="4") -
+            tr
+              td URAIAN KETIDAKSESUAIAN
+                div(style="font-size:10px;font-style:italic;") *diisi oleh Quality Control
+              td(colspan="4") #{obj.Matters}
+            tr
+              td(style="width:15% !important;") KEMUNGKINAN AKAR KETIDAKSESUAIAN
+                div(style="font-size:10px;font-style:italic;") *diisi oleh Quality Control
+              td(colspan="3",style="width:65% !important;") #{obj.Description}
+              td(style="width:20% !important;")
+                div(style="font-weight:bold;") ROOT CAUSE:
+                span #{obj.RootCause}
+            tr
+              td DOKUMEN TERLAMPIR
+                div(style="font-size:10px;font-style:italic;") (Foto sebelum perbaikan, site memo owner, dll.)
+              td(colspan="4")
+        table.pageBreak
+          tbody
+            tr
+              td.rotate(rowspan="6",style="line-height: 0px;width:10px !important;padding:0px;") PERBAIKAN
+              td(style="font-weight:bold;") LANGKAH PERBAIKAN
+                div(style="font-size:10px;font-style:italic;") *diisi oleh PEM dan POM
+              td(colspan="3") #{obj.CorrectiveAction}
+              td
+                div(style="font-weight:bold") NOTES:
+                span 
+            tr
+              td TARGET PENYELESAIAN
+                div(style="font-size:10px;font-style:italic;") *diisi oleh PEM dan POM
+              td(colspan="4") #{obj.uv_sla.EnumValue} Hari
+            tr
+              td TINDAKAN PENCEGAHAN (HINDARI KEJADIAN BERULANG)
+                div(style="font-size:10px;font-style:italic;") *diisi oleh PEM
+              td(colspan="4") #{obj.PreventiveAction}
+            tr
+              td(colspan="5") PERSETUJUAN PERBAIKAN & PENCEGAHAN
+                span(style="font-weight:normal;") &nbsp; *diisi oleh Project Manager
+            tr.pageBreak
+              td(colspan="5") Comment:
+                br
+                br
+                br
+                br
+            tr.pageBreak
+              td(style="font-weight:bold;width:33.3%;",colspan="2") Nama:
+              td(style="font-weight:bold;width:33.3%;",colspan="2") Tanggal: 
+              td(style="font-weight:bold;width:33.3%;") Tanda Tangan:
+            tr.pageBreak
+              td.rotate(rowspan="10", style="width:10px !important;padding:0px;line-height: 0px;") PENUTUPAN
+              td(style="font-weight:bold;width:33.3%;",colspan="2", rowspan="2") PENANGGUNG JAWAB UNTUK PENUTUPAN NCR
+              td(style="font-weight:bold;width:33.3%;",colspan="2") Perusahaan:
+              td(style="font-weight:bold;width:33.3%;")
+            tr
+              td(style="font-weight:bold;width:33.3%;",colspan="2") Nama:
+                div(style="font-size:10px;font-style:italic;") *nama QC in charge
+              td
+            tr
+              td(colspan="5", style="text-align:center") VERIFIKASI DARI PENUTUPAN NCR
+            tr
+              td Attachment:
+              td(colspan="4")  *dilampirkan dengan foto setelah perbaikan dan dokumen referensi lainnya
+            tr
+              td(rowspan="3")
+              td(style="font-weight:bold;") Dibuat oleh
+              td(style="font-weight:bold;") Disetujui oleh
+              td(colspan="2",style="font-weight:bold;") Mengetahui
+            tr
+              td(style="font-weight:bold;") Project Operation Manager
+              td(style="font-weight:bold;") Project Engineering Manager
+              td(style="font-weight:bold;") Project Manager
+              td(style="font-weight:bold;") Owner
+            tr
+              td
+                br
+                br
+                br
+                br
+              td
+                br
+                br
+                br
+                br
+              td
+                br
+                br
+                br
+                br
+              td
+                br
+                br
+                br
+                br
+            tr
+              td Tanda Tangan:
+              td
+              td
+              td
+              td
+            tr
+              td Nama:
+              td
+              td
+              td
+              td
+            tr
+              td Tanggal:
+              td
+              td
+              td
+              td
+        br
+        .description
+          .sub-header Catatan
+          ol.terms
+            li Sebagai dokumentasi internal, form NCR Acset harus tetap diisi dan digunakan meskipun project  sudah mempunyai form NCR resmi dari Owner 
+            li Apabila project mempunyai form NCR resmi dari Owner, mohon dilampirkan sebagai dokumen pendukung sehingga Owner tidak harus menandatangani form ini. 
+            li Owner tanda tangan di form NCR Acset apabila project tidak mempunyai form NCR resmi dari Owner
+            li Form NCR Acset digunakan untuk menyusun PICA atas NCR yang terjadi
+      .clear-both
+      br
+      div Sebelum Perbaikan
+        br
+        each item,index in obj.ReportPhotos
+          img.beforeImg(src=''+urlAttach+item.Filename+'', alt='', title=''+item.Filename+'',onload="printDoc(1);")
+      div Sesudah Perbaikan
+        br
+        img.afterImg(src=''+urlAttach+obj.ReportProgresses[0].Photo+'', alt='', title=''+obj.ReportProgresses[0].Photo+'',onload="printDoc(1);")
