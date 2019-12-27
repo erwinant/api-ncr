@@ -1,6 +1,7 @@
 const model = require('../models/index');
 var express = require('express');
 var router = express.Router();
+const moment = require('moment');
 
 router.get('/', function (req, res, next) {
     model.Users.findAll({
@@ -10,7 +11,7 @@ router.get('/', function (req, res, next) {
     });
 });
 router.post('/cr/', function (req, res, next) {
-    req.body.RowStatus=1;
+    req.body.RowStatus = 1;
     model.Users.findAll({
         where: req.body,
         include: [{ model: model.Project }]
@@ -23,4 +24,13 @@ router.post('/', function (req, res, next) {
         res.json(result);
     })
 });
+
+router.put('/', function (req, res, next) {
+    model.Users.update(req.body, { where: { Username: req.body.Username } }).then((result) => {
+        res.json(result);
+    }
+    )
+});
+
+
 module.exports = router;

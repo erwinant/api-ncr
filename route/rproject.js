@@ -19,6 +19,7 @@ router.post('/cr/', function (req, res, next) {
         include: [
             { model: model.Pic, where: { RowStatus: 1 }, required: false },
             { model: model.Users, where: { RowStatus: 1, Role:'user' }, required: false },
+            { model: model.Users,as: "QsPr", where: { RowStatus: 1, Role:'qs-pr' }, required: false },
             { model: model.Location, where: { RowStatus: 1 }, required: false }
         ]
     }).then((result) => {
@@ -45,6 +46,12 @@ router.post('/post/upsert/', function (req, res, next) {
                                             res.json(result1[0]);
                                         } else { res.json("error while user"); }
                                     });
+
+                                    saveUser(req.body.QsPr, result1[0].Id, (us) => {
+                                        if (us === "done") {
+                                            //res.json(result1[0]);
+                                        } else {  }
+                                    });
                                 } else { res.json("error while user"); }
                             });
 
@@ -66,6 +73,11 @@ router.post('/post/upsert/', function (req, res, next) {
                                                 if (us === "done") {
                                                     res.json(result1[0]);
                                                 } else { res.json("error while user"); }
+                                            });
+                                            saveUser(req.body.QsPr, result1[0].Id, (us) => { //insert only user
+                                                if (us === "done") {
+                                                    //res.json(result1[0]);
+                                                } else {  }
                                             });
                                         } else { res.json("error while user"); }
                                     });

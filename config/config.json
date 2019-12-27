@@ -3,7 +3,7 @@
     "username": "ncruser",
     "password": "Acset123",
     "database": "ncr_app",
-    "host": "bigbang.acset.co",
+    "host": "172.17.2.1",
     "dialect": "mssql",
     "folderImage":"C:\\Users\\erwina\\Documents\\RnD\\Project\\api-ncr\\dist\\attachment\\",
     "baseUrl":"dev-ncr.asgard.co",
