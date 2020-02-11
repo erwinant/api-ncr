@@ -13,6 +13,7 @@ router.get('/', function (req, res, next) {
 router.post('/cr/', function (req, res, next) {
     req.body.RowStatus = 1;
     model.Users.findAll({
+        attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus'] },
         where: req.body,
         include: [{ model: model.Project }]
     }).then((result) => {

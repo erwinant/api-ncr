@@ -16,11 +16,25 @@ router.post('/cr/', function (req, res, next) {
     req.body.RowStatus = 1;
     model.Project.findAll({
         where: req.body,
+        attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus'] },
         include: [
-            { model: model.Pic, where: { RowStatus: 1 }, required: false },
-            { model: model.Users, where: { RowStatus: 1, Role:'user' }, required: false },
-            { model: model.Users,as: "QsPr", where: { RowStatus: 1, Role:'qs-pr' }, required: false },
-            { model: model.Location, where: { RowStatus: 1 }, required: false }
+            { model: model.Pic, where: { RowStatus: 1 }, required: false,attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus']} },
+            { model: model.Users, where: { RowStatus: 1, Role:'user' }, required: false,attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus'] }},
+            { model: model.Users,as: "QsPr", where: { RowStatus: 1, Role:'qs-pr' }, required: false,attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus'] }},
+            { model: model.Location, where: { RowStatus: 1 }, required: false,attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus']} }
+        ]
+    }).then((result) => {
+        res.json(result);
+    })
+});
+router.post('/cr/simple/', function (req, res, next) {
+    req.body.RowStatus = 1;
+    model.Project.findAll({
+        where: req.body,
+        attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus', 'ProjectAddress'] },
+        include: [
+            { model: model.Location, where: { RowStatus: 1 }, required: false,attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus']} },
+            { model: model.Pic, where: { RowStatus: 1 }, required: false,attributes: { exclude: ['CreateDate', 'CreateBy', 'UpdateDate', 'UpdateBy', 'RowStatus']} }
         ]
     }).then((result) => {
         res.json(result);
@@ -105,6 +119,7 @@ saveLocation = (locations, projectId, callback) => {
         locations.forEach(el => {
             el.ProjectID = projectId;
             if (el.Id > 0) {
+                el.RowStatus = 1;
                 model.Location.update(el, { where: { Id: el.Id } }).then((updated) => {
                     checksum++;
                     if (checksum == locations.length) {
