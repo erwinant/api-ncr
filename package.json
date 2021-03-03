@@ -24,7 +24,7 @@
     "moment": "^2.24.0",
     "node-excel-export": "^1.4.4",
     "path": "^0.12.7",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "puppeteer": "^1.19.0",
     "puppeteer-core": "^1.19.0",
     "sequelize": "^5.8.6",
