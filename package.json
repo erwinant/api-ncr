@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@wesselkuipers/odata-sequelize": "^1.0.14",
-    "async": "^2.6.2",
+    "async": "^2.6.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-timeout": "^1.9.0",
