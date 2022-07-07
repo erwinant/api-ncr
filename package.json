@@ -21,7 +21,7 @@
     "html-to-image": "^0.1.1",
     "http": "0.0.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node-excel-export": "^1.4.4",
     "path": "^0.12.7",
     "pug": "^2.0.4",
